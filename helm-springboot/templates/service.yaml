@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm-springboot.fullname" . }}
+  labels:
+    {{- include "helm-springboot.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8080  # Update this with the correct port number
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "helm-springboot.selectorLabels" . | nindent 4 }}

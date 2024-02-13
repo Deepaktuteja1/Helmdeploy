@@ -1,0 +1,42 @@
+replicaCount: 1
+
+image:
+  repository: deepak025/springhelm # Change this to your DockerHub repository
+  pullPolicy: IfNotPresent
+  tag: latest # Change this to the tag you want to use for your Docker image
+
+service:
+  type: NodePort # Change this if you want to use a different type of service
+
+ingress:
+  enabled: false # Set this to true if you want to enable Ingress
+  hosts:
+    - host: chart-example.local # Change this to your desired host
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+resources: {}
+  # Uncomment and adjust the following lines if you want to specify resource limits
+  # limits:
+  #   cpu: "100m"
+  #   memory: "128Mi"
+  # requests:
+  #   cpu: "100m"
+#   memory: "128Mi"
+
+livenessProbe:
+  httpGet:
+    path: /helm # Change this path if your application uses a different endpoint for health checks
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /helm # Change this path if your application uses a different endpoint for readiness checks
+    port: http
+
+serviceAccount:
+  create: false
+
+autoscaling:
+  enabled: false
